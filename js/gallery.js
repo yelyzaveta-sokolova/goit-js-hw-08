@@ -64,28 +64,39 @@ const images = [
   },
 ];
 
-const gallery = document.querySelector(".gallery");
-gallery.addEventListener("click", openImg);
+const gallery = document.querySelector('.gallery');
 
-const listItems = images.map(({ preview, original, description }) =>
-   ` <li class = "gallery-item">
-<a class = "gallery-link" href = "${original}">
-<img class = "gallery-image" src = "${preview}"
-alt = "${description}" width = "360" /.></a></li>`).join("");
+gallery.addEventListener('click', openImg);
+
+const imgItems = images.map(({ preview, original, description }) =>
+    ` <li class="gallery-item">
+        <a class="gallery-link" href="${original}">
+            <img
+                class="gallery-image"
+                src="${preview}"
+                data-source="${original}"
+                alt="${description}"
+                width='360'
+            />
+        </a>
+    </li>`
+).join('');
 
 gallery.insertAdjacentHTML('beforeend', imgItems);
 
 function openImg(event) {
-   event.preventDefault();
+    event.preventDefault();
+
     const { target } = event;
- if (target.nodeName !== "IMG") {
+
+    if (target.nodeName !== "IMG") {
         return;
     }
 
     const instance = basicLightbox.create(
         `<img src="${target.dataset.source}" alt="${target.alt}" width="1112">`
     )
-    instance.show();
+   instance.show();
 
     const keyPress = event => {
         if (event.code === 'Escape') {
